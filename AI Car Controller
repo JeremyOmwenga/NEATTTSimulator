@@ -19,14 +19,12 @@ public class AICarController : MonoBehaviour
     // Wheels
     [SerializeField] private Transform frontLeftWheelTransform, frontRightWheelTransform;
     [SerializeField] private Transform rearLeftWheelTransform, rearRightWheelTransform;
-
-    private void FixedUpdate() {
-        GetInput();
-        HandleMotor();
-        HandleSteering();
-        UpdateWheels();
+    private void HandleSteering() {
+        currentSteerAngle = maxSteerAngle * horizontalInput;
+        frontLeftWheelCollider1.steerAngle = currentSteerAngle;
+        frontRightWheelCollider1.steerAngle = currentSteerAngle;
     }
-
+   
     private void GetInput() {
         // Steering Input
         horizontalInput = Input.GetAxis("Horizontal");
@@ -38,20 +36,8 @@ public class AICarController : MonoBehaviour
         isBreaking = Input.GetKey(KeyCode.Space);
     }
 
-    private void HandleMotor() {
-        frontLeftWheelCollider1.motorTorque = verticalInput * motorForce;
-        frontRightWheelCollider1.motorTorque = verticalInput * motorForce;
-        currentbreakForce = isBreaking ? breakForce : 0f;
-        ApplyBreaking();
-    }
 
-    private void ApplyBreaking() {
-        frontRightWheelCollider1.brakeTorque = currentbreakForce;
-        frontLeftWheelCollider1.brakeTorque = currentbreakForce;
-        rearLeftWheelCollider1.brakeTorque = currentbreakForce;
-        rearRightWheelCollider1.brakeTorque = currentbreakForce;
-    }
-
+    
     private void HandleSteering() {
         currentSteerAngle = maxSteerAngle * horizontalInput;
         frontLeftWheelCollider1.steerAngle = currentSteerAngle;
@@ -72,4 +58,5 @@ public class AICarController : MonoBehaviour
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }
+
 }
