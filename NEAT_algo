@@ -1,0 +1,39 @@
+import math
+import random
+import sys
+import os
+
+import neat
+import pygame
+
+
+WIDTH = 1920
+HEIGHT = 1080
+
+CAR_SIZE_X = 60
+CAR_SIZE_Y = 60
+
+BORDER_COLOR = (255, 255, 255, 255)  # Color To Crash on Hit
+
+current_generation = 0  # Generation counter
+public class AICarController : MonoBehaviour
+{
+    private float horizontalInput, verticalInput;
+    private float currentSteerAngle, currentbreakForce;
+    private bool isBreaking;
+
+    // Settings
+    [SerializeField] private float motorForce, breakForce, maxSteerAngle;
+
+    // Wheel Colliders
+    [SerializeField] private WheelCollider frontLeftWheelCollider1, frontRightWheelCollider1;
+    [SerializeField] private WheelCollider rearLeftWheelCollider1, rearRightWheelCollider1;
+
+    // Wheels
+    [SerializeField] private Transform frontLeftWheelTransform, frontRightWheelTransform;
+    [SerializeField] private Transform rearLeftWheelTransform, rearRightWheelTransform;
+    private void HandleSteering() {
+        currentSteerAngle = maxSteerAngle * horizontalInput;
+        frontLeftWheelCollider1.steerAngle = currentSteerAngle;
+        frontRightWheelCollider1.steerAngle = currentSteerAngle;
+    }
